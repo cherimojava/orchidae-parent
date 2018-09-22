@@ -1,0 +1,28 @@
+sudo: false
+language: java
+install: true
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+
+addons:
+  sonarcloud:
+    organization: "cherimojava"
+    token: $SONARCLOUD
+
+script:
+- mvn clean deploy --settings settings.xml
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhook.atomist.com/travis
+    on_success: always
+    on_failure: always
+    on_start: always
+    on_cancel: always
+    on_error: always
